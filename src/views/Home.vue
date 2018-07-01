@@ -1,9 +1,13 @@
 <template>
+  <!-- TODO: Make mobile friendly -->
+  <!-- TODO: Get src from user (torrent or file) -->
+  <!-- TODO: Route to video page w/ uuid -->
+  <!-- TODO: Generate UUID for host -->
   <transition
     name="slide"
   >
     <div class="home-page page">
-      <div class="panel left" @click="goToVideoPage">
+      <div class="panel left">
         <div class="spacer"></div>
         <p class="header">Stream</p>
         <input
@@ -11,6 +15,7 @@
           type="text"
           placeholder="uuid"
         >
+        <!-- TODO: Add a submit button -->
       </div>
       <div class="panel right" @click="goToVideoPage">
         <div class="spacer"></div>
@@ -63,7 +68,7 @@ export default Vue.extend({
       }
 
       .uuid-input {
-        opacity: 1;
+        opacity: 0.9;
       }
     }
 
@@ -80,12 +85,21 @@ export default Vue.extend({
 
     .uuid-input {
       transition: opacity $transitionTime ease;
-      border-radius: 1%;
+      border-radius: 30px;
       height: 25px;
       width: 200px;
       background-color: transparent;
       border: 2px solid $white;
+      padding-left: 15px;
+      color: $white;
+      outline: none;
+      font-family: 'Roboto Slab', serif;
       opacity: 0;
+
+      &::placeholder {
+        color: $white;
+        opacity: 0.8;
+      }
     }
   }
 
