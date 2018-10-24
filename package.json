@@ -1,0 +1,36 @@
+{
+  "name": "wesync-web",
+  "version": "0.0.1",
+  "description": "Watch videos with your loved ones regardless of distance",
+  "main": "src/Main.elm",
+  "repository": "git@github.com:ScarletGames/TODO:.git",
+  "author": "WeSyncVideo",
+  "private": false,
+  "license": "GPL-3.0",
+  "scripts": {
+    "start": "cross-env WEBPACK_ENV=dev webpack-dev-server",
+    "build": "npm run build:prod",
+    "build:prod": "cross-env WEBPACK_ENV=prod webpack",
+    "test": "elm-test",
+    "lint": "npm run lint:elm && npm run lint:js",
+    "lint:elm": "elm-format src/ --validate",
+    "lint:js": "standard \"./**/*.js\"",
+    "format": "elm format src/"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^0.1.19",
+    "cross-env": "^5.2.0",
+    "elm": "^0.19.0-bugfix2",
+    "elm-format": "^0.8.1",
+    "elm-test": "^0.18.13-beta3",
+    "elm-webpack-loader": "^5.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "standard": "^12.0.1",
+    "standard-loader": "^6.0.1",
+    "webpack": "^4.22.0",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10",
+    "webpack-merge": "^4.1.4",
+    "webpack-subresource-integrity": "^1.2.0"
+  }
+}
