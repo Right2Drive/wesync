@@ -3,11 +3,15 @@ import Browser.Navigation as Nav
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Url
+import Port
+import Json.Decode as D
+import Model exposing (Model)
+import Flag
 
 -- Main --
 
 
-main : Program () Model Msg
+main : Program D.Value Model Msg
 main =
   Browser.application
     { init = init
@@ -19,18 +23,16 @@ main =
     }
 
 
--- Model
 
 
-type alias Model =
-  { key : Nav.Key
-  , url : Url.Url
-  }
-
-
-init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
+init : D.Value -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init flags url key =
-  ( Model key url, Cmd.none )
+  ( { cache = Flag.initCache flags
+    , url = url
+    , key = key
+    }
+  , Cmd.none
+  )
 
 
 -- Messages
@@ -77,7 +79,8 @@ view : Model -> Browser.Document Msg
 view model =
   { title = "WeSync Video"
   , body =
-      [ text "The current url is: "
+      [ viewCache model
+      , text "The current url is: "
       , b [] [ text (Url.toString model.url) ]
       , ul []
         [ viewLink "/home"
@@ -86,6 +89,11 @@ view model =
         ]
       ]
   }
+
+
+viewCache : Model -> Html msg
+viewCache model =
+  p [] [ text model.cache.version ]
 
 
 viewLink : String -> Html Msg

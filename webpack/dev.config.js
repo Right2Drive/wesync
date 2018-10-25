@@ -6,7 +6,22 @@ function devConfig () {
     mode: 'development',
     devServer: {
       contentBase: root('dist')
-    }
+    },
+    module: {
+      rules: [
+        {
+          test: /\.elm$/,
+          exclude: [/elm-stuff/, /node_modules/],
+          use: {
+            loader: 'elm-webpack-loader',
+            options: {
+              cwd: root(),
+              debug: true,
+            },
+          },
+        },
+      ],
+    },
   })
 }
 

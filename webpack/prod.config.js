@@ -10,6 +10,21 @@ function prodConfig () {
     output: {
       crossOriginLoading: 'anonymous',
     },
+    module: {
+      rules: [
+        {
+          test: /\.elm$/,
+          exclude: [/elm-stuff/, /node_modules/],
+          use: {
+            loader: 'elm-webpack-loader',
+            options: {
+              cwd: root(),
+              optimize: true,
+            },
+          },
+        },
+      ],
+    },
     plugins: [
       new CleanWebpackPlugin(['dist'], {
         root: root()

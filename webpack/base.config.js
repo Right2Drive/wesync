@@ -15,21 +15,6 @@ const baseConfig = {
   resolve: {
     extensions: ['.elm', '.js']
   },
-  module: {
-    rules: [
-      {
-        test: /\.elm$/,
-        exclude: [/elm-stuff/, /node_modules/],
-        use: {
-          loader: 'elm-webpack-loader',
-          options: {
-            cwd: root(),
-            optimize: true,
-          },
-        },
-      },
-    ],
-  },
   plugins: [
     new HtmlWebpackPlugin({
       template: root('src', 'index.html'),
