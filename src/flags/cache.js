@@ -1,5 +1,5 @@
-function getCache() {
-  const value = localStorage.getItem('elmcache')
+function getCache () {
+  const value = window.localStorage.getItem('elmcache')
   return JSON.parse(value)
 }
 

@@ -1,8 +1,7 @@
 module Message exposing (Msg(..))
 
-
-import Url
 import Browser
+import Url
 
 
 type Msg

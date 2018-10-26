@@ -19,8 +19,8 @@ const baseConfig = {
     new HtmlWebpackPlugin({
       template: root('src', 'index.html'),
       inject: 'body'
-    }),
-  ],
+    })
+  ]
 }
 
 function createConfig (config) {

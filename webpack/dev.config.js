@@ -16,12 +16,12 @@ function devConfig () {
             loader: 'elm-webpack-loader',
             options: {
               cwd: root(),
-              debug: true,
-            },
-          },
-        },
-      ],
-    },
+              debug: true
+            }
+          }
+        }
+      ]
+    }
   })
 }
 

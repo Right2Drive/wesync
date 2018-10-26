@@ -7,7 +7,7 @@ const createListen = app => module => {
   })
 }
 
-function listenOnPorts(app) {
+function listenOnPorts (app) {
   const listen = createListen(app)
   listen(cache)
 }

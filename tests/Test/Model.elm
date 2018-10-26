@@ -1,9 +1,9 @@
-module Test.Model exposing (..)
+module Test.Model exposing (suite)
 
 import Expect exposing (Expectation)
 import Fuzz exposing (Fuzzer, int, list, string)
-import Test exposing (..)
 import Model exposing (defaultCache)
+import Test exposing (..)
 
 
 suite : Test

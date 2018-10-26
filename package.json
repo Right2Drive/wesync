@@ -18,8 +18,8 @@
     "lint:elm:tests": "elm-format tests/ --validate",
     "lint:js": "standard \"./**/*.js\"",
     "format": "npm run format:src && npm run format:tests",
-    "format:src": "elm format src/",
-    "format:tests": "elm format test/"
+    "format:src": "elm-format src/",
+    "format:tests": "elm-format tests/"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.19",

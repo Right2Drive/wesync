@@ -8,7 +8,7 @@ function prodConfig () {
   return createConfig({
     mode: 'production',
     output: {
-      crossOriginLoading: 'anonymous',
+      crossOriginLoading: 'anonymous'
     },
     module: {
       rules: [
@@ -19,11 +19,11 @@ function prodConfig () {
             loader: 'elm-webpack-loader',
             options: {
               cwd: root(),
-              optimize: true,
-            },
-          },
-        },
-      ],
+              optimize: true
+            }
+          }
+        }
+      ]
     },
     plugins: [
       new CleanWebpackPlugin(['dist'], {
@@ -31,8 +31,8 @@ function prodConfig () {
       }),
       new SriPlugin({
         hashFuncNames: ['sha256', 'sha384'],
-        enabled: process.env.NODE_ENV === 'production',
-      }),
+        enabled: process.env.NODE_ENV === 'production'
+      })
     ]
   })
 }

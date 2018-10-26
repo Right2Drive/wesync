@@ -1,6 +1,6 @@
 import { getCache } from './cache'
 
-function getFlags() {
+function getFlags () {
   return {
     cache: getCache()
   }

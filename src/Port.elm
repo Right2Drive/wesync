@@ -1,8 +1,8 @@
 port module Port exposing (sendCache)
 
-
 import Json.Encode exposing (Value, object, string)
 import Model exposing (Cache)
+
 
 
 -- Cache
@@ -21,8 +21,9 @@ sendCache cache =
 encodeCache : Cache -> Value
 encodeCache cache =
     object
-        [ ("version", string cache.version)
+        [ ( "version", string cache.version )
         ]
+
 
 
 -- Video

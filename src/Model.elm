@@ -1,8 +1,8 @@
-module Model exposing (..)
-
+module Model exposing (Cache, Flags, Model, defaultCache, defaultModel)
 
 import Browser.Navigation as Nav
 import Url
+
 
 
 -- Model
@@ -24,12 +24,12 @@ defaultModel url key cache =
 
 
 type alias Flags =
-    { cache: Cache
+    { cache : Cache
     }
 
 
 type alias Cache =
-    { version: String
+    { version : String
     }
 
 
