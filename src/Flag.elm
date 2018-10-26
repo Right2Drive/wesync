@@ -8,16 +8,16 @@ import Model exposing (Cache, defaultCache)
 
 initCache : Value -> Cache
 initCache value =
-  case decodeValue cacheDecoder value of
+    case decodeValue cacheDecoder value of
 
-    Ok cache -> cache
+        Ok cache -> cache
 
-    Err _ -> defaultCache
+        Err _ -> defaultCache
 
 
 cacheDecoder : Decoder Cache
 cacheDecoder =
-  field "cache"
-    ( succeed Cache
-      |> optional "version" string defaultCache.version
-    )
+    field "cache"
+        ( succeed Cache
+            |> optional "version" string defaultCache.version
+        )

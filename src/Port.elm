@@ -13,16 +13,16 @@ port setCache : Value -> Cmd msg
 
 sendCache : Cache -> Cmd msg
 sendCache cache =
-  cache
-    |> encodeCache
-    |> setCache
+    cache
+        |> encodeCache
+        |> setCache
 
 
 encodeCache : Cache -> Value
 encodeCache cache =
-  object
-  [ ("version", string cache.version)
-  ]
+    object
+        [ ("version", string cache.version)
+        ]
 
 
 -- Video

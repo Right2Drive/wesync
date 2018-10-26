@@ -1,3 +1,6 @@
+module Main exposing (..)
+
+
 import Browser
 import Browser.Navigation as Nav
 import Html exposing (..)
@@ -22,21 +25,21 @@ import Page.Video
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-  case msg of
+    case msg of
     
-    LinkClicked urlRequest ->
-      case urlRequest of
+        LinkClicked urlRequest ->
+            case urlRequest of
 
-        Browser.Internal url ->
-          ( model, Nav.pushUrl model.key (Url.toString url) )
+                Browser.Internal url ->
+                    ( model, Nav.pushUrl model.key (Url.toString url) )
 
-        Browser.External href ->
-          ( model, Nav.load href )
+                Browser.External href ->
+                    ( model, Nav.load href )
 
-    UrlChanged url ->
-      ( { model | url = url }
-      , Cmd.none
-      )
+        UrlChanged url ->
+            ( { model | url = url }
+            , Cmd.none
+            )
 
 
 -- Subscriptions
@@ -44,38 +47,38 @@ update msg model =
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-  Sub.none
+    Sub.none
 
 
 -- Nav
 
 
 type Route
-  = Home
-  | Video
-  | About
-  | Donations
+    = Home
+    | Video
+    | About
+    | Donations
 
 
 type UrlRequest
-  = Internal Url.Url
-  | External String
+    = Internal Url.Url
+    | External String
 
 
 routeParser : P.Parser (Route -> a) a
 routeParser =
-  P.oneOf
-    [ P.map Home        (P.s "home")
-    , P.map Video       (P.s "video")
-    , P.map About       (P.s "about")
-    , P.map Donations   (P.s "donations")
-    ]
+    P.oneOf
+        [ P.map Home        (P.s "home")
+        , P.map Video       (P.s "video")
+        , P.map About       (P.s "about")
+        , P.map Donations   (P.s "donations")
+        ]
 
 
 titleFromPath : Url.Url -> String
 titleFromPath url =
-  -- TODO: implement this
-  "WeSync Video"
+    -- TODO: implement this
+    "WeSync Video"
 
 
 -- View
@@ -83,11 +86,11 @@ titleFromPath url =
 
 view : Model -> Browser.Document Msg
 view model =
-  { title = titleFromPath model.url
-  , body =
-      [ div [] [ text "test string" ]
-      ]
-  }
+    { title = titleFromPath model.url
+    , body =
+        [ div [] [ text "test string" ]
+        ]
+    }
 
 
 -- Main --
@@ -95,23 +98,23 @@ view model =
 
 init : D.Value -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init flags url key =
-  let
-      cache =
-        Flag.initCache flags
+    let
+        cache =
+            Flag.initCache flags
 
-  in
-    ( defaultModel url key cache
-    , Port.sendCache cache
-    )
+    in
+        ( defaultModel url key cache
+        , Port.sendCache cache
+        )
 
 
 main : Program D.Value Model Msg
 main =
-  Browser.application
-    { init = init
-    , view = view
-    , update = update
-    , subscriptions = subscriptions
-    , onUrlChange = UrlChanged
-    , onUrlRequest = LinkClicked
-    }
+    Browser.application
+        { init = init
+        , view = view
+        , update = update
+        , subscriptions = subscriptions
+        , onUrlChange = UrlChanged
+        , onUrlRequest = LinkClicked
+        }

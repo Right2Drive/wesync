@@ -9,34 +9,31 @@ import Url
 
 
 type alias Model =
-  { key : Nav.Key
-  , url : Url.Url
-  , cache : Cache
-  , title : String
-  }
+    { key : Nav.Key
+    , url : Url.Url
+    , cache : Cache
+    }
 
 
 defaultModel : Url.Url -> Nav.Key -> Cache -> Model
 defaultModel url key cache =
-  { key = key
-  , url = url
-  , cache = cache
-  -- TODO: Generate from current url
-  , title = "WeSync Video | TODO"
-  }
+    { key = key
+    , url = url
+    , cache = cache
+    }
 
 
 type alias Flags =
-  { cache: Cache
-  }
+    { cache: Cache
+    }
 
 
 type alias Cache =
-  { version: String
-  }
+    { version: String
+    }
 
 
 defaultCache : Cache
 defaultCache =
-  { version = "0.0.1"
-  }
+    { version = "0.0.1"
+    }

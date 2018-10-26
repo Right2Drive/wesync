@@ -6,5 +6,5 @@ import Browser
 
 
 type Msg
-  = LinkClicked Browser.UrlRequest
-  | UrlChanged Url.Url
+    = LinkClicked Browser.UrlRequest
+    | UrlChanged Url.Url
