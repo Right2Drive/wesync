@@ -1,5 +1,10 @@
 sudo: false
 
+language: node_js
+
+node_js:
+  - "lts/*"
+
 cache:
   directories:
     - tests/elm-stuff/build-artifacts
