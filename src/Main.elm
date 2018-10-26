@@ -3,6 +3,7 @@ import Browser.Navigation as Nav
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Url
+import Url.Parser as P
 import Port
 import Json.Decode as D
 import Model exposing (Model, defaultModel)
@@ -10,35 +11,10 @@ import Model exposing (Model, defaultModel)
 -- TODO: How to use Msg.Example namespacing
 import Message exposing (Msg(..))
 import Flag
-
-
--- Main --
-
-
-main : Program D.Value Model Msg
-main =
-  Browser.application
-    { init = init
-    , view = view
-    , update = update
-    , subscriptions = subscriptions
-    , onUrlChange = UrlChanged
-    , onUrlRequest = LinkClicked
-    }
-
-
-
-
-init : D.Value -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
-init flags url key =
-  let
-      cache =
-        Flag.initCache flags
-
-  in
-    ( defaultModel url key cache
-    , Port.sendCache cache
-    )
+import Page.Home
+import Page.Donations
+import Page.About
+import Page.Video
 
 
 -- Update
@@ -71,37 +47,71 @@ subscriptions _ =
   Sub.none
 
 
+-- Nav
+
+
+type Route
+  = Home
+  | Video
+  | About
+  | Donations
+
+
+type UrlRequest
+  = Internal Url.Url
+  | External String
+
+
+routeParser : P.Parser (Route -> a) a
+routeParser =
+  P.oneOf
+    [ P.map Home        (P.s "home")
+    , P.map Video       (P.s "video")
+    , P.map About       (P.s "about")
+    , P.map Donations   (P.s "donations")
+    ]
+
+
+titleFromPath : Url.Url -> String
+titleFromPath url =
+  -- TODO: implement this
+  "WeSync Video"
+
+
 -- View
 
 
 view : Model -> Browser.Document Msg
 view model =
-  { title = "WeSync Video"
+  { title = titleFromPath model.url
   , body =
-      [ viewCache model
-      , text "The current url is: "
-      , b [] [ text (Url.toString model.url) ]
-      , ul []
-        [ viewLink "/home"
-        , viewLink "/profile"
-        , viewLink "/test/path"
-        ]
+      [ div [] [ text "test string" ]
       ]
   }
 
 
-viewCache : Model -> Html msg
-viewCache model =
-  p [] [ text model.cache.version ]
+-- Main --
 
 
-viewLink : String -> Html Msg
-viewLink path =
-  li [] [ a [ href path ] [ text path ] ]
+init : D.Value -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
+init flags url key =
+  let
+      cache =
+        Flag.initCache flags
+
+  in
+    ( defaultModel url key cache
+    , Port.sendCache cache
+    )
 
 
--- Nav
-
-type UrlRequest
-  = Internal Url.Url
-  | External String
+main : Program D.Value Model Msg
+main =
+  Browser.application
+    { init = init
+    , view = view
+    , update = update
+    , subscriptions = subscriptions
+    , onUrlChange = UrlChanged
+    , onUrlRequest = LinkClicked
+    }

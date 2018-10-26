@@ -1,4 +1,4 @@
-module Page.Home exposing (view)
+module Page.Donations exposing (view)
 
 
 import Html exposing (..)

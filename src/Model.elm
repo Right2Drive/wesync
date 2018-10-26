@@ -12,6 +12,7 @@ type alias Model =
   { key : Nav.Key
   , url : Url.Url
   , cache : Cache
+  , title : String
   }
 
 
@@ -20,6 +21,8 @@ defaultModel url key cache =
   { key = key
   , url = url
   , cache = cache
+  -- TODO: Generate from current url
+  , title = "WeSync Video | TODO"
   }
 
 
