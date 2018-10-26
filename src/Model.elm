@@ -15,6 +15,14 @@ type alias Model =
   }
 
 
+defaultModel : Url.Url -> Nav.Key -> Cache -> Model
+defaultModel url key cache =
+  { key = key
+  , url = url
+  , cache = cache
+  }
+
+
 type alias Flags =
   { cache: Cache
   }
@@ -22,4 +30,10 @@ type alias Flags =
 
 type alias Cache =
   { version: String
+  }
+
+
+defaultCache : Cache
+defaultCache =
+  { version = "0.0.1"
   }

@@ -1,5 +1,5 @@
 function setCache(value) {
-  localStorage.setItem(key, JSON.stringify(value))
+  localStorage.setItem('elmcache', JSON.stringify(value))
 }
 
 export {

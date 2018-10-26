@@ -1,13 +1,28 @@
-port module Port exposing (..)
+port module Port exposing (sendCache)
 
 
-import Json.Encode as E
+import Json.Encode exposing (Value, object, string)
+import Model exposing (Cache)
 
 
--- Storage
+-- Cache
 
 
-port setCache : E.Value -> Cmd msg
+port setCache : Value -> Cmd msg
+
+
+sendCache : Cache -> Cmd msg
+sendCache cache =
+  cache
+    |> encodeCache
+    |> setCache
+
+
+encodeCache : Cache -> Value
+encodeCache cache =
+  object
+  [ ("version", string cache.version)
+  ]
 
 
 -- Video

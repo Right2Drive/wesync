@@ -5,8 +5,12 @@ import Html.Attributes exposing (..)
 import Url
 import Port
 import Json.Decode as D
-import Model exposing (Model)
+import Model exposing (Model, defaultModel)
+-- TODO: How to only import specific messages
+-- TODO: How to use Msg.Example namespacing
+import Message exposing (Msg(..))
 import Flag
+
 
 -- Main --
 
@@ -27,23 +31,18 @@ main =
 
 init : D.Value -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init flags url key =
-  ( { cache = Flag.initCache flags
-    , url = url
-    , key = key
-    }
-  , Cmd.none
-  )
+  let
+      cache =
+        Flag.initCache flags
 
-
--- Messages
-
-
-type Msg
-  = LinkClicked Browser.UrlRequest
-  | UrlChanged Url.Url
+  in
+    ( defaultModel url key cache
+    , Port.sendCache cache
+    )
 
 
 -- Update
+
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
