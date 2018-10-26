@@ -1,0 +1,28 @@
+sudo: false
+
+cache:
+  directories:
+    - tests/elm-stuff/build-artifacts
+    - sysconfcpus
+
+before_install:
+    - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+    - | # epic build time improvement - see https://github.com/elm-lang/elm-compiler/issues/1473#issuecomment-245704142
+        if [ ! -d sysconfcpus/bin ];
+        then
+            git clone https://github.com/obmarg/libsysconfcpus.git;
+            cd libsysconfcpus;
+            ./configure --prefix=$TRAVIS_BUILD_DIR/sysconfcpus;
+            make && make install;
+            cd ..;
+        fi
+
+install:
+    - npm install
+
+before_script:
+    - npm run lint
+    - $TRAVIS_BUILD_DIR/sysconfcpus/bin/sysconfcpus -n 2 npm run build
+
+script:
+    - $TRAVIS_BUILD_DIR/sysconfcpus/bin/sysconfcpus -n 2 npm run test
