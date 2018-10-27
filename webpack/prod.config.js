@@ -52,6 +52,7 @@ function prodConfig () {
         description: 'Video streaming application for local files with synced controls',
         background_color: '#616161',
         theme_color: '#212121',
+        display: 'standalone',
         icons: [
           {
             src: root('assets', 'favicon.png'),
