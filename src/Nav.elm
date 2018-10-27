@@ -24,6 +24,7 @@ routeParser =
     oneOf
         [ Parser.map Home top
         , Parser.map Video (s "watch" </> string)
+        , Parser.map (VideoNotFound "") (s "nohost")
         , Parser.map VideoNotFound (s "nohost" </> string)
         , Parser.map About (s "about")
         , Parser.map Donations (s "donations")
@@ -54,7 +55,7 @@ routeToName route =
 
         Donations -> "Donations"
 
-        VideoNotFound _ -> "Not Found"
+        VideoNotFound _ -> "No Host"
 
         NotFound -> "404"
 

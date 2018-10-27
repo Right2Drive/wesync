@@ -7,4 +7,7 @@ import Model exposing (Model)
 
 view : Model -> String -> Html Msg
 view model uuid =
-    p [] [ text "video" ]
+    div []
+        [ h1 [] [ text "Video Page" ]
+        , p [] [ text ("uuid: " ++ uuid) ]
+        ]
