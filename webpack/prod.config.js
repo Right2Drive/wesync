@@ -50,7 +50,8 @@ function prodConfig () {
         name: 'WeSync Video Client',
         short_name: 'WeSync',
         description: 'Video streaming application for local files with synced controls',
-        background_color: '#424242',
+        background_color: '#616161',
+        theme_color: '#212121',
         icons: [
           {
             src: root('assets', 'favicon.png'),
