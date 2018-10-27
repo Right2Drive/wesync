@@ -1,16 +1,16 @@
 module Main exposing (init, main, subscriptions)
 
-
 import Browser
 import Browser.Navigation as Nav
-import Json.Decode as D
-import Url exposing (Url)
 import Flag
+import Json.Decode as D
 import Message exposing (Msg(..))
 import Model exposing (Model, defaultModel, update)
-import Port
-import View exposing (view)
 import Nav
+import Port
+import Url exposing (Url)
+import View exposing (view)
+
 
 
 -- Subscriptions
@@ -21,6 +21,7 @@ subscriptions _ =
     Sub.none
 
 
+
 -- Main --
 
 
@@ -29,7 +30,6 @@ init flags url key =
     let
         cache =
             Flag.initCache flags
-
     in
     ( defaultModel url key cache
     , Port.sendCache cache

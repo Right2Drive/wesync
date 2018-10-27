@@ -1,10 +1,10 @@
-module Model exposing (Cache, Flags, Model, update, defaultCache, defaultModel)
-
+module Model exposing (Cache, Flags, Model, defaultCache, defaultModel, update)
 
 import Browser
 import Browser.Navigation as Nav
-import Url
 import Message exposing (Msg(..))
+import Url
+
 
 
 -- Model
@@ -39,6 +39,7 @@ defaultCache : Cache
 defaultCache =
     { version = "0.0.1"
     }
+
 
 
 -- Update

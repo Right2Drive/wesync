@@ -1,19 +1,18 @@
 module View exposing (view)
 
-
 import Browser
-import Html exposing (Html, main_, div, text)
+import Html exposing (Html, div, main_, text)
 import Html.Attributes exposing (class)
-import Url exposing (Url)
-import Model exposing (Model)
 import Message exposing (Msg(..))
+import Model exposing (Model)
 import Nav exposing (Route(..), toRoute)
-import Page.Home
 import Page.About
-import Page.NotFound
 import Page.Donations
+import Page.Home
+import Page.NotFound
 import Page.Video
 import Page.VideoNotFound
+import Url exposing (Url)
 
 
 view : Model -> Browser.Document Msg
@@ -38,7 +37,6 @@ viewUrl model =
 viewRoute : Model -> Nav.Route -> Html Msg
 viewRoute model route =
     case route of
-
         NotFound ->
             Page.NotFound.view model
 

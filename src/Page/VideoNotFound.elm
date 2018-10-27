@@ -1,6 +1,5 @@
 module Page.VideoNotFound exposing (view)
 
-
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Message exposing (Msg(..))

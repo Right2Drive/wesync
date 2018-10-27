@@ -1,8 +1,7 @@
-module Nav exposing (Route(..), UrlRequest(..), urlToTitle, toRoute)
-
+module Nav exposing (Route(..), UrlRequest(..), toRoute, urlToTitle)
 
 import Url exposing (Url)
-import Url.Parser as Parser exposing (Parser, parse, oneOf, s, top, string, (</>))
+import Url.Parser as Parser exposing ((</>), Parser, oneOf, parse, s, string, top)
 
 
 type Route
@@ -34,7 +33,6 @@ routeParser =
 toRoute : String -> Route
 toRoute str =
     case Url.fromString str of
-        
         Nothing ->
             NotFound
 
@@ -46,24 +44,28 @@ toRoute str =
 routeToName : Route -> String
 routeToName route =
     case route of
+        Home ->
+            "Home"
 
-        Home -> "Home"
+        Video _ ->
+            "Watch"
 
-        Video _ -> "Watch"
+        About ->
+            "About"
 
-        About -> "About"
+        Donations ->
+            "Donations"
 
-        Donations -> "Donations"
+        VideoNotFound _ ->
+            "No Host"
 
-        VideoNotFound _ -> "No Host"
-
-        NotFound -> "404"
+        NotFound ->
+            "404"
 
 
 routeToString : Route -> String
 routeToString route =
     case route of
-
         Home ->
             "/"
 
@@ -91,7 +93,5 @@ urlToTitle url =
                 |> Url.toString
                 |> toRoute
                 |> routeToName
-
-
     in
-        "WeSync Video | " ++ routeName
+    "WeSync Video | " ++ routeName
