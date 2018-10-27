@@ -1,0 +1,4 @@
+This is a Brave Payments publisher verification file.
+
+Domain: wesync.io
+Token: a40d91a45c002fc4dfc5d5e3720432845e74230c3062b84721dfed36c54efb7a
