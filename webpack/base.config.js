@@ -1,4 +1,5 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlPlugin = require('html-webpack-plugin')
+const FaviconsPlugin = require('favicons-webpack-plugin')
 const merge = require('webpack-merge')
 
 const { root } = require('./util')
@@ -16,10 +17,11 @@ const baseConfig = {
     extensions: ['.elm', '.js']
   },
   plugins: [
-    new HtmlWebpackPlugin({
+    new HtmlPlugin({
       template: root('src', 'index.html'),
       inject: 'body'
-    })
+    }),
+    new FaviconsPlugin(root('favicon.png'))
   ]
 }
 
