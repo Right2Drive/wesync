@@ -36,12 +36,12 @@ function prodConfig () {
       }),
       new CopyPlugin([
         {
-          from: root('.well-known'),
-          to: root('dist', '.well-known')
+          from: root('public/*'),
+          to: root('dist')
         },
         {
-          from: root('_redirects'),
-          to: root('dist')
+          from: root('public', '.well-known'),
+          to: root('dist', '.well-known')
         }
       ])
     ]
