@@ -38,6 +38,10 @@ function prodConfig () {
         {
           from: root('.well-known'),
           to: root('dist', '.well-known')
+        },
+        {
+          from: root('_redirects'),
+          to: root('dist')
         }
       ])
     ]
