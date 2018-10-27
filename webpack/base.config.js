@@ -22,7 +22,7 @@ const baseConfig = {
       template: root('src', 'index.html'),
       inject: 'body'
     }),
-    new FaviconsPlugin(root('public', 'favicon.png'))
+    new FaviconsPlugin(root('assets', 'favicon.png'))
   ]
 }
 
