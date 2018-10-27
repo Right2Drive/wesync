@@ -1,44 +1,15 @@
-module Main exposing (Route(..), UrlRequest(..), init, main, routeParser, subscriptions, titleFromPath, update, view)
-
--- TODO: How to only import specific messages
--- TODO: How to use Msg.Example namespacing
+module Main exposing (init, main, subscriptions)
 
 import Browser
 import Browser.Navigation as Nav
 import Flag
-import Html exposing (..)
-import Html.Attributes exposing (..)
 import Json.Decode as D
 import Message exposing (Msg(..))
-import Model exposing (Model, defaultModel)
-import Page.About
-import Page.Donations
-import Page.Home
-import Page.Video
+import Model exposing (Model, defaultModel, update)
+import Nav
 import Port
-import Url
-import Url.Parser as P
-
-
-
--- Update
-
-
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    case msg of
-        LinkClicked urlRequest ->
-            case urlRequest of
-                Browser.Internal url ->
-                    ( model, Nav.pushUrl model.key (Url.toString url) )
-
-                Browser.External href ->
-                    ( model, Nav.load href )
-
-        UrlChanged url ->
-            ( { model | url = url }
-            , Cmd.none
-            )
+import Url exposing (Url)
+import View exposing (view)
 
 
 
@@ -51,55 +22,10 @@ subscriptions _ =
 
 
 
--- Nav
-
-
-type Route
-    = Home
-    | Video
-    | About
-    | Donations
-
-
-type UrlRequest
-    = Internal Url.Url
-    | External String
-
-
-routeParser : P.Parser (Route -> a) a
-routeParser =
-    P.oneOf
-        [ P.map Home (P.s "home")
-        , P.map Video (P.s "video")
-        , P.map About (P.s "about")
-        , P.map Donations (P.s "donations")
-        ]
-
-
-titleFromPath : Url.Url -> String
-titleFromPath url =
-    -- TODO: implement this
-    "WeSync Video"
-
-
-
--- View
-
-
-view : Model -> Browser.Document Msg
-view model =
-    { title = titleFromPath model.url
-    , body =
-        [ div [] [ text "test string" ]
-        ]
-    }
-
-
-
 -- Main --
 
 
-init : D.Value -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
+init : D.Value -> Url -> Nav.Key -> ( Model, Cmd Msg )
 init flags url key =
     let
         cache =

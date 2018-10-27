@@ -11,7 +11,8 @@ const baseConfig = {
   },
   output: {
     path: root('dist'),
-    filename: '[name].[hash].js'
+    filename: '[name].[hash].js',
+    publicPath: '/'
   },
   resolve: {
     extensions: ['.elm', '.js']
