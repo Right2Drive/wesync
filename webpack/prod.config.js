@@ -37,11 +37,19 @@ function prodConfig () {
       }),
       new CopyPlugin([
         {
-          from: root('public/*'),
+          from: root('assets', '_redirects'),
           to: root('dist')
         },
         {
-          from: root('public', '.well-known'),
+          from: root('assets', 'browserconfig.xml'),
+          to: root('dist')
+        },
+        {
+          from: root('assets', 'robots.txt'),
+          to: root('dist')
+        },
+        {
+          from: root('assets', '.well-known'),
           to: root('dist', '.well-known')
         }
       ]),
