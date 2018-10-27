@@ -30,7 +30,7 @@ We **strongly recommend using Brave** as the team behind it is doing great thing
 - Saves you data
 - Soon to pay it's users who opt in to view ads
 
-You can take a look and/or download it [here](https://brave.com/)
+You can take a look and/or download it [here](https://brave.com/wes723) (full disclosure this is also a referral link, but even if you want to visit https://brave.com directly it really is worth trying out)
 
 ## Donations
 
