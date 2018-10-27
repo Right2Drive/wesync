@@ -1,10 +1,12 @@
-module Page.Video exposing (view)
+module Page.VideoNotFound exposing (view)
+
 
 import Html exposing (..)
+import Html.Attributes exposing (..)
 import Message exposing (Msg(..))
 import Model exposing (Model)
 
 
 view : Model -> String -> Html Msg
 view model uuid =
-    p [] [ text "video" ]
+    div [] [ text "video not found" ]
