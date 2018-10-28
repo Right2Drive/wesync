@@ -1,4 +1,4 @@
-module Nav exposing (Route(..), UrlRequest(..), toRoute, urlToTitle)
+module Nav exposing (Route(..), UrlRequest(..), toRoute, urlToClass, urlToTitle)
 
 import Url exposing (Url)
 import Url.Parser as Parser exposing ((</>), Parser, oneOf, parse, s, string, top)
@@ -63,6 +63,28 @@ routeToName route =
             "404"
 
 
+routeToClass : Route -> String
+routeToClass route =
+    case route of
+        Home ->
+            "home"
+
+        Video _ ->
+            "video"
+
+        About ->
+            "about"
+
+        Donations ->
+            "donations"
+
+        VideoNotFound _ ->
+            "video-not-found"
+
+        NotFound ->
+            "not-found"
+
+
 routeToString : Route -> String
 routeToString route =
     case route of
@@ -90,8 +112,21 @@ urlToTitle url =
     let
         routeName =
             url
-                |> Url.toString
-                |> toRoute
+                |> urlToRoute
                 |> routeToName
     in
     "WeSync Video | " ++ routeName
+
+
+urlToClass : Url -> String
+urlToClass url =
+    url
+        |> urlToRoute
+        |> routeToClass
+
+
+urlToRoute : Url -> Route
+urlToRoute url =
+    url
+        |> Url.toString
+        |> toRoute

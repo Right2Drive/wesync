@@ -1,11 +1,13 @@
 module View exposing (view)
 
 import Browser
-import Html exposing (Html, div, main_, text)
-import Html.Attributes exposing (class)
+import Css exposing (..)
+import Html
+import Html.Styled exposing (..)
+import Html.Styled.Attributes exposing (class)
 import Message exposing (Msg(..))
 import Model exposing (Model)
-import Nav exposing (Route(..), toRoute)
+import Nav exposing (Route(..), toRoute, urlToClass)
 import Page.About
 import Page.Donations
 import Page.Home
@@ -19,11 +21,25 @@ view : Model -> Browser.Document Msg
 view model =
     { title = Nav.urlToTitle model.url
     , body =
-        [ main_ [ class "page" ]
-            [ viewUrl model
-            ]
-        ]
+        model
+            |> viewBody
+            |> List.map toUnstyled
     }
+
+
+viewBody : Model -> List (Html Msg)
+viewBody model =
+    let
+        contents =
+            viewUrl model
+
+        routeClass =
+            urlToClass model.url
+    in
+    [ main_ [ class ("page " ++ routeClass) ]
+        [ contents
+        ]
+    ]
 
 
 viewUrl : Model -> Html Msg

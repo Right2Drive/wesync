@@ -1,6 +1,7 @@
 module Page.About exposing (view)
 
-import Html exposing (..)
+import Html
+import Html.Styled exposing (..)
 import Message exposing (Msg(..))
 import Model exposing (Model)
 
