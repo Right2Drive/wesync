@@ -4,7 +4,7 @@ import Browser
 import Css exposing (..)
 import Html
 import Html.Styled exposing (..)
-import Html.Styled.Attributes exposing (class)
+import Html.Styled.Attributes exposing (..)
 import Message exposing (Msg(..))
 import Model exposing (Model)
 import Nav exposing (Route(..), toRoute, urlToClass)
@@ -36,7 +36,15 @@ viewBody model =
         routeClass =
             urlToClass model.url
     in
-    [ main_ [ class ("page " ++ routeClass) ]
+    [ main_
+        [ class ("page " ++ routeClass)
+        , css
+            [ displayFlex
+            , position absolute
+            , Css.height (vh 100)
+            , Css.width (vw 100)
+            ]
+        ]
         [ contents
         ]
     ]

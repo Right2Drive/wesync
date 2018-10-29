@@ -8,7 +8,8 @@ function devConfig () {
       contentBase: root('dist'),
       historyApiFallback: true,
       index: root('dist', 'index.html'),
-      overlay: true
+      overlay: true,
+      hot: false
     },
     module: {
       rules: [
