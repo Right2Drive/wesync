@@ -1,4 +1,4 @@
-module Page.VideoNotFound exposing (view)
+module Page.NoHost exposing (view)
 
 import Html
 import Html.Attributes exposing (..)
@@ -7,6 +7,6 @@ import Message exposing (Msg(..))
 import Model exposing (Model)
 
 
-view : Model -> String -> Html Msg
+view : Model -> String -> List (Html Msg)
 view model uuid =
-    div [] [ text "video not found" ]
+    []

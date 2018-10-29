@@ -13,7 +13,7 @@ import Page.Donations
 import Page.Home
 import Page.NotFound
 import Page.Video
-import Page.VideoNotFound
+import Page.NoHost
 import Url exposing (Url)
 
 
@@ -40,17 +40,17 @@ viewBody model =
         [ class ("page " ++ routeClass)
         , css
             [ displayFlex
-            , position absolute
             , Css.height (vh 100)
             , Css.width (vw 100)
+            , fontSize (Css.em 1)
+            , position relative
             ]
         ]
-        [ contents
-        ]
+        contents
     ]
 
 
-viewUrl : Model -> Html Msg
+viewUrl : Model -> List (Html Msg)
 viewUrl model =
     model.url
         |> Url.toString
@@ -58,7 +58,7 @@ viewUrl model =
         |> viewRoute model
 
 
-viewRoute : Model -> Nav.Route -> Html Msg
+viewRoute : Model -> Nav.Route -> List (Html Msg)
 viewRoute model route =
     case route of
         NotFound ->
@@ -70,8 +70,8 @@ viewRoute model route =
         Video uuid ->
             Page.Video.view model uuid
 
-        VideoNotFound uuid ->
-            Page.VideoNotFound.view model uuid
+        NoHost uuid ->
+            Page.NoHost.view model uuid
 
         About ->
             Page.About.view model

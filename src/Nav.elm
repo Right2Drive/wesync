@@ -9,7 +9,7 @@ type Route
     | About
     | Donations
     | Video String
-    | VideoNotFound String
+    | NoHost String
     | NotFound
 
 
@@ -23,8 +23,8 @@ routeParser =
     oneOf
         [ Parser.map Home top
         , Parser.map Video (s "watch" </> string)
-        , Parser.map (VideoNotFound "") (s "nohost")
-        , Parser.map VideoNotFound (s "nohost" </> string)
+        , Parser.map (NoHost "") (s "nohost")
+        , Parser.map NoHost (s "nohost" </> string)
         , Parser.map About (s "about")
         , Parser.map Donations (s "donations")
         ]
@@ -56,7 +56,7 @@ routeToName route =
         Donations ->
             "Donations"
 
-        VideoNotFound _ ->
+        NoHost _ ->
             "No Host"
 
         NotFound ->
@@ -78,7 +78,7 @@ routeToClass route =
         Donations ->
             "donations"
 
-        VideoNotFound _ ->
+        NoHost _ ->
             "video-not-found"
 
         NotFound ->
@@ -100,7 +100,7 @@ routeToString route =
         Donations ->
             "/donations"
 
-        VideoNotFound uuid ->
+        NoHost uuid ->
             "/nohost/" ++ uuid
 
         NotFound ->

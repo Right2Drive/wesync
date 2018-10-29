@@ -6,6 +6,7 @@ import Message exposing (Msg(..))
 import Model exposing (Model)
 
 
-view : Model -> Html Msg
+view : Model -> List (Html Msg)
 view model =
-    div [] [ text "not found page" ]
+    [ div [] [ text "not found page" ]
+    ]

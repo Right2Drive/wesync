@@ -6,6 +6,6 @@ import Message exposing (Msg(..))
 import Model exposing (Model)
 
 
-view : Model -> Html Msg
+view : Model -> List (Html Msg)
 view model =
-    a [] []
+    []
