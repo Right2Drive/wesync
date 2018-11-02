@@ -4,29 +4,58 @@ import Html
 import Html.Styled exposing (..)
 import Html.Styled.Attributes exposing (..)
 import Html.Styled.Events exposing (onClick)
+import Svg.Styled
+import Svg.Styled.Attributes
 import Css exposing (..)
 import Message exposing (Msg(..))
 import Model exposing (Model)
 import Style.Theme as Theme
 import Style.Font as Font
+import Assets.Svg
+
+
+type alias Panel =
+    { name : String
+    , class : String
+    , icon : List (Svg.Styled.Attribute Msg) -> Html Msg
+    , iconSize : Int
+    }
 
 
 view : Model -> List (Html Msg)
 view model =
-    [ panel "host" "host" "/icons/host.svg"
+    [ viewPanel hostPanel
         []
-    , panel "watch" "watch" "/icons/watch.svg"
+    , viewPanel watchPanel
         []
     ]
 
 
-panel : String -> String -> String -> List (Html Msg) -> Html Msg
-panel name panelClass imgSrc contents =
+hostPanel : Panel
+hostPanel =
+    { name = "host"
+    , class = "host"
+    , icon = Assets.Svg.host
+    , iconSize = 64
+    }
+
+
+watchPanel : Panel
+watchPanel =
+    { name = "watch"
+    , class = "watch"
+    , icon = Assets.Svg.watch
+    , iconSize = 72
+    }
+
+
+viewPanel : Panel -> List (Html Msg) -> Html Msg
+viewPanel panel contents =
 
     div
         [ classList
             [ ("panel", True)
-            , (panelClass, True)
+            , (panel.class, True)
             ]
         , css
             [ displayFlex
@@ -36,6 +65,7 @@ panel name panelClass imgSrc contents =
             , justifyContent center
             , alignItems center
             , backgroundColor Theme.dark
+            , paddingBottom (pct 10)
             ]
         ]
         [ h2
@@ -48,10 +78,13 @@ panel name panelClass imgSrc contents =
                 , color Theme.dimWhite
                 ]
             ]
-            [ text name ]
-        , img
-            [ src imgSrc
-            , alt (name ++ " image")
+            [ text panel.name ]
+        , panel.icon
+            -- Must make sure to use Svg.Styled instead of Html.Styled package
+            [ Svg.Styled.Attributes.css
+                [ Css.height (px <| toFloat panel.iconSize)
+                , Css.width (px <| toFloat panel.iconSize)
+                , fill Theme.white
+                ]
             ]
-            []
         ]
