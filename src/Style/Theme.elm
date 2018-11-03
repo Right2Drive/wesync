@@ -32,3 +32,9 @@ white =
 dimWhite : Color
 dimWhite =
     rgba 255 255 255 0.80
+
+
+-- TODO: Update this based on wireframe
+dimBlack : Color
+dimBlack =
+    rgba 0 0 0 0.85
