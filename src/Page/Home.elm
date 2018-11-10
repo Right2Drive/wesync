@@ -8,7 +8,7 @@ import Svg.Styled
 import Svg.Styled.Attributes
 import Css exposing (..)
 import Css.Global
-import Css.Transitions exposing (Transition, TimingFunction, transition, easeInOut)
+import Css.Transitions exposing (Transition, transition, easeInOut)
 import Message exposing (Msg(..))
 import Model exposing (Model)
 import Style.Theme as Theme
@@ -65,7 +65,6 @@ watchPanel =
 
 viewPanel : Panel -> List (Html Msg) -> Html Msg
 viewPanel panel contents =
-
     div
         [ classList
             [ ("panel", True)
@@ -80,10 +79,12 @@ viewPanel panel contents =
             , alignItems center
             , backgroundColor Theme.dark
             , paddingBottom (pct 10)
+            , transition
+                [ backgroundColorTransition
+                ]
             , hover
                 [ backgroundColor panel.activeColor
-                -- Unfortunately must either use Css.Global here, or add
-                -- hover state to model (not performant)
+                -- not supported by elm-css scoped, must use global
                 , Css.Global.children
                     [ Css.Global.class (titleClass panel.class)
                         [ color <| panel.activeItemColor
@@ -97,7 +98,7 @@ viewPanel panel contents =
                 ]
             ]
         ]
-        [ h2
+        ([ h2
             [ class (titleClass panel.class)
             , css
                 [ marginBottom (px 30)
@@ -106,19 +107,23 @@ viewPanel panel contents =
                 , fontWeight (int 600)
                 , fontSize (rem 5)
                 , color panel.inactiveItemColor
+                , transition
+                    [ colorTransition
+                    ]
                 ]
             ]
             [ text panel.name ]
         , panel.icon
-            [ Svg.Styled.Attributes.class (iconClass panel.class)
+            [ Svg.Styled.Attributes.class
+                <| (iconClass panel.class) ++ " " ++ "svg-fill-transition"
             -- Must make sure to use Svg.Styled instead of Html.Styled package
             , Svg.Styled.Attributes.css
                 [ Css.height (px <| toFloat panel.iconSize)
                 , Css.width (px <| toFloat panel.iconSize)
-                , fill Theme.white
+                , fill panel.inactiveItemColor
                 ]
             ]
-        ]
+        ] ++ contents)
 
 
 titleClass : String -> String
@@ -131,12 +136,22 @@ iconClass panelClass =
     panelClass ++ "-icon"
 
 
-baseTransition : (Float -> Float -> TimingFunction -> Transition) -> Transition
-baseTransition transitionTarget =
-    transitionTarget 0.5 0 easeInOut
+backgroundColorTransition : Transition
+backgroundColorTransition =
+    Css.Transitions.backgroundColor3 transitionLength 0 easeInOut
 
 
-iconTransition : Transition
-iconTransition =
-    -- TODO: Probably need to change to target all
-    baseTransition Css.Transitions.fill
+colorTransition : Transition
+colorTransition =
+    Css.Transitions.color3 transitionLength 0 easeInOut
+
+
+{--
+    Length of the transitions for the home page.
+
+    For the time being (until elm-css supports svg fill transitions), the value
+    must also be changed in the 'index.html' template
+--}
+transitionLength : Float
+transitionLength =
+    300
