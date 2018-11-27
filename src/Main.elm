@@ -21,7 +21,6 @@ subscriptions _ =
     Sub.none
 
 
-
 -- Main --
 
 
@@ -31,9 +30,9 @@ init flags url key =
         cache =
             Flag.initCache flags
     in
-    ( defaultModel url key cache
-    , Port.sendCache cache
-    )
+        ( defaultModel url key cache
+        , Port.sendCache cache
+        )
 
 
 main : Program D.Value Model Msg

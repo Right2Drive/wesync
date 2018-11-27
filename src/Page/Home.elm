@@ -30,12 +30,32 @@ type alias Panel =
 
 view : Model -> List (Html Msg)
 view model =
-    [ viewPanel hostPanel
-        []
-    , viewPanel watchPanel
+    [ div
+        [ class "panels"
+        , css
+            [ displayFlex
+            , flexDirection row
+            , Css.height (px 0)
+            , flexGrow (int 1)
+            ]
+        ]
+        [ viewPanel hostPanel
+            []
+        , viewPanel watchPanel
+            []
+        ]
+    , div
+        [ class "filler"
+        , css
+            [ Css.height footerHeight
+            ]
+        ]
         []
     ]
 
+footerHeight : Px
+footerHeight =
+    px 40
 
 hostPanel : Panel
 hostPanel =

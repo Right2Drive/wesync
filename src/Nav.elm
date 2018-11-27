@@ -1,16 +1,21 @@
-module Nav exposing (Route(..), UrlRequest(..), toRoute, urlToClass, urlToTitle)
+module Nav exposing (Route(..), UrlRequest(..), urlToRoute, urlToClass, urlToTitle)
 
 import Url exposing (Url)
 import Url.Parser as Parser exposing ((</>), Parser, oneOf, parse, s, string, top)
 
 
 type Route
-    = Home
-    | About
-    | Donations
-    | Video String
-    | NoHost String
+    = Home FooterRoute
+    | Host FooterRoute
+    | Watch FooterRoute String
     | NotFound
+
+
+type FooterRoute
+    = About
+    | Donations
+    | Changelog
+    | Closed
 
 
 type UrlRequest
@@ -21,13 +26,34 @@ type UrlRequest
 routeParser : Parser (Route -> a) a
 routeParser =
     oneOf
-        [ Parser.map Home top
-        , Parser.map Video (s "watch" </> string)
-        , Parser.map (NoHost "") (s "nohost")
-        , Parser.map NoHost (s "nohost" </> string)
-        , Parser.map About (s "about")
-        , Parser.map Donations (s "donations")
+        -- Home
+        [ Parser.map (Home Closed) top
+        , Parser.map (Home About) (s "about")
+        , Parser.map (Home Donations) (s "donate")
+
+        -- Host
+        , Parser.map (Host Closed) (s "host")
+        , Parser.map (Host About) (s "host" </> s "about")
+        , Parser.map (Host Donations) (s "host" </> s "donate")
+        , Parser.map (Host Changelog) (s "host" </> s "changelog")
+
+        -- Peer
+        , Parser.map (Watch Closed) (s "watch" </> string)
+        , Parser.map (Watch About) (s "watch" </> string </> s "about")
+        , Parser.map (Watch Donations) (s "watch" </> string </> s "donate")
+        , Parser.map (Watch Changelog) (s "watch" </> string </> s "changelog")
+
+        -- Peer (Stripped UUID)
+        , Parser.map (Watch Closed "") (s "watch")
+        , Parser.map (Watch About "") (s "watch" </> s "about")
+        , Parser.map (Watch Donations "") (s "watch" </> s "donate")
+        , Parser.map (Watch Changelog "") (s "watch" </> s "changelog")
         ]
+
+
+donationsPath : String
+donationsPath =
+    "donate"
 
 
 toRoute : String -> Route
@@ -44,11 +70,40 @@ toRoute str =
 routeToName : Route -> String
 routeToName route =
     case route of
-        Home ->
-            "Home"
+        Home footerRoute ->
+            getRouteNameWithFooter "Home" footerRoute
 
-        Video _ ->
-            "Watch"
+        Host footerRoute ->
+            getRouteNameWithFooter "Host" footerRoute
+
+        Watch footerRoute _ ->
+            getRouteNameWithFooter "Watch" footerRoute
+
+        NotFound ->
+            "404"
+
+
+getRouteNameWithFooter : String -> FooterRoute -> String
+getRouteNameWithFooter routeName footerRoute =
+    case footerRoute of
+        About ->
+            "About"
+
+        Donations ->
+            "Donations"
+
+        Changelog ->
+            "Changelog"
+
+        Closed ->
+            routeName
+
+
+footerRouteToName : FooterRoute -> String
+footerRouteToName route =
+    case route of
+        Closed ->
+            ""
 
         About ->
             "About"
@@ -56,55 +111,75 @@ routeToName route =
         Donations ->
             "Donations"
 
-        NoHost _ ->
-            "No Host"
-
-        NotFound ->
-            "404"
+        Changelog ->
+            "Changelog"
 
 
 routeToClass : Route -> String
 routeToClass route =
     case route of
-        Home ->
+        Home _ ->
             "home"
 
-        Video _ ->
-            "video"
+        Watch _ _ ->
+            "watch video"
 
+        Host _ ->
+            "host video"
+
+        NotFound ->
+            "not-found"
+
+
+footerRouteToClass : FooterRoute -> String
+footerRouteToClass route =
+    case route of
         About ->
             "about"
 
         Donations ->
             "donations"
 
-        NoHost _ ->
-            "video-not-found"
+        Changelog ->
+            "changelog"
 
-        NotFound ->
-            "not-found"
+        Closed ->
+            "shown"
 
 
 routeToString : Route -> String
 routeToString route =
     case route of
-        Home ->
-            "/"
+        Home footerRoute ->
+            footerRouteToString footerRoute
 
-        Video uuid ->
-            "/watch/" ++ uuid
+        Watch footerRoute "" ->
+            "/watch" ++ footerRouteToString footerRoute
 
+        Watch footerRoute uuid ->
+            "/watch/" ++ uuid ++ footerRouteToString footerRoute
+
+        Host footerRoute ->
+            "/host" ++ footerRouteToString footerRoute
+
+        NotFound ->
+            "404"
+
+
+footerRouteToString : FooterRoute -> String
+footerRouteToString route =
+    case route of
         About ->
             "/about"
 
         Donations ->
             "/donations"
 
-        NoHost uuid ->
-            "/nohost/" ++ uuid
+        Changelog ->
+            "/changelog"
 
-        NotFound ->
-            "404"
+        Closed ->
+            "/"
 
 
 urlToTitle : Url -> String
@@ -115,7 +190,7 @@ urlToTitle url =
                 |> urlToRoute
                 |> routeToName
     in
-    "WeSync Video | " ++ routeName
+        "WeSync Video | " ++ routeName
 
 
 urlToClass : Url -> String

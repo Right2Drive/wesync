@@ -7,7 +7,7 @@ import Html.Styled exposing (..)
 import Html.Styled.Attributes exposing (..)
 import Message exposing (Msg(..))
 import Model exposing (Model)
-import Nav exposing (Route(..), toRoute, urlToClass)
+import Nav exposing (Route(..), urlToClass)
 import Page.About
 import Page.Donations
 import Page.Home
@@ -40,6 +40,7 @@ viewBody model =
         [ class ("page " ++ routeClass)
         , css
             [ displayFlex
+            , flexDirection column
             , Css.height (vh 100)
             , Css.width (vw 100)
             , fontSize (Css.em 1)
@@ -53,8 +54,7 @@ viewBody model =
 viewUrl : Model -> List (Html Msg)
 viewUrl model =
     model.url
-        |> Url.toString
-        |> toRoute
+        |> Nav.urlToRoute
         |> viewRoute model
 
 
