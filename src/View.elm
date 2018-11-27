@@ -7,7 +7,7 @@ import Html.Styled exposing (..)
 import Html.Styled.Attributes exposing (..)
 import Message exposing (Msg(..))
 import Model exposing (Model)
-import Nav exposing (Route(..), urlToClass)
+import Nav exposing (Route(..), FooterRoute(..))
 import Page.About
 import Page.Donations
 import Page.Home
@@ -19,8 +19,7 @@ import Url exposing (Url)
 
 view : Model -> Browser.Document Msg
 view model =
-    { title = Nav.urlToTitle model.url
-    , body =
+    { title = Nav.routeToTitle model.route , body =
         model
             |> viewBody
             |> List.map toUnstyled
@@ -34,7 +33,7 @@ viewBody model =
             viewUrl model
 
         routeClass =
-            urlToClass model.url
+            Nav.routeToClass model.route
     in
     [ main_
         [ class ("page " ++ routeClass)
@@ -53,28 +52,85 @@ viewBody model =
 
 viewUrl : Model -> List (Html Msg)
 viewUrl model =
-    model.url
-        |> Nav.urlToRoute
-        |> viewRoute model
+    viewRoute model
 
 
-viewRoute : Model -> Nav.Route -> List (Html Msg)
-viewRoute model route =
-    case route of
-        NotFound ->
-            Page.NotFound.view model
+viewRoute : Model -> List (Html Msg)
+viewRoute model =
+    let
+        routeClass =
+            Nav.routeToClass model.route
 
-        Home ->
-            Page.Home.view model
+    in
+        (viewMain model) ++ (viewFooter model)
 
-        Video uuid ->
-            Page.Video.view model uuid
 
-        NoHost uuid ->
-            Page.NoHost.view model uuid
+viewFooter : Model -> List (Html Msg)
+viewFooter model =
+    let
+        maybeFooterRoute =
+            case model.route of
+                Home footerRoute ->
+                    Just footerRoute
+
+                _ -> Nothing
+
+        footerContents =
+            case maybeFooterRoute of
+                Just footerRoute ->
+                    viewFooterRoute footerRoute model
+
+                Nothing ->
+                    []
+
+    in
+        case List.length footerContents of
+            0 ->
+                [] -- If no footer want empty list
+
+            _ ->
+                [ footer
+                    [ class "footer"
+                    , css
+                        [ -- TODO: Styles for footer
+                        ]
+                    ]
+                    footerContents
+                ]
+
+
+viewFooterRoute : FooterRoute -> Model -> List (Html Msg)
+viewFooterRoute footerRoute model =
+    case footerRoute of
+        Closed ->
+            []
 
         About ->
-            Page.About.view model
+            []
 
         Donations ->
-            Page.Donations.view model
+            []
+
+        Changelog ->
+            []
+
+
+viewMain : Model -> List (Html Msg)
+viewMain model =
+    let
+        contents =
+            []
+    
+    in
+        [ main_
+            [ css
+                [ displayFlex
+                , flexDirection column
+                , Css.height (vh 100)
+                , Css.width (vw 100)
+                , fontSize (Css.em 1)
+                , position relative
+                ]
+            ]
+            contents
+        ]

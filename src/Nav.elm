@@ -1,4 +1,4 @@
-module Nav exposing (Route(..), UrlRequest(..), urlToRoute, urlToClass, urlToTitle)
+module Nav exposing (Route(..), FooterRoute(..), UrlRequest(..), urlToRoute, routeToClass, routeToTitle)
 
 import Url exposing (Url)
 import Url.Parser as Parser exposing ((</>), Parser, oneOf, parse, s, string, top)
@@ -182,22 +182,14 @@ footerRouteToString route =
             "/"
 
 
-urlToTitle : Url -> String
-urlToTitle url =
+routeToTitle : Route -> String
+routeToTitle route =
     let
         routeName =
-            url
-                |> urlToRoute
+            route
                 |> routeToName
     in
         "WeSync Video | " ++ routeName
-
-
-urlToClass : Url -> String
-urlToClass url =
-    url
-        |> urlToRoute
-        |> routeToClass
 
 
 urlToRoute : Url -> Route
