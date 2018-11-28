@@ -8,64 +8,55 @@ import Html.Styled.Attributes exposing (..)
 import Message exposing (Msg(..))
 import Model exposing (Model)
 import Nav exposing (Route(..), FooterRoute(..))
+import Url exposing (Url)
 import Page.About
 import Page.Donations
+import Page.Changelog
 import Page.Home
 import Page.NotFound
 import Page.Video
 import Page.NoHost
-import Url exposing (Url)
+import Component.Footer
 
 
 view : Model -> Browser.Document Msg
 view model =
-    { title = Nav.routeToTitle model.route , body =
+    { title = Nav.routeToTitle model.route
+    , body =
         model
-            |> viewBody
+            |> viewRoute
+            |> List.singleton
             |> List.map toUnstyled
     }
 
-
-viewBody : Model -> List (Html Msg)
-viewBody model =
-    let
-        contents =
-            viewUrl model
-
-        routeClass =
-            Nav.routeToClass model.route
-    in
-    [ main_
-        [ class ("page " ++ routeClass)
-        , css
-            [ displayFlex
-            , flexDirection column
-            , Css.height (vh 100)
-            , Css.width (vw 100)
-            , fontSize (Css.em 1)
-            , position relative
-            ]
-        ]
-        contents
-    ]
-
-
-viewUrl : Model -> List (Html Msg)
-viewUrl model =
-    viewRoute model
-
-
-viewRoute : Model -> List (Html Msg)
+viewRoute : Model -> Html Msg
 viewRoute model =
     let
         routeClass =
             Nav.routeToClass model.route
 
+        pageContents =
+            viewMain model
+
+        footerContents =
+            viewFooter model
     in
-        (viewMain model) ++ (viewFooter model)
+        div
+            [ class ("route " ++ routeClass)
+            , css
+                [ displayFlex
+                , flexDirection column
+                , Css.height (vh 100)
+                , Css.width (vw 100)
+                , overflow Css.hidden
+                ]
+            ]
+            [ pageContents
+            , footerContents
+            ]
 
 
-viewFooter : Model -> List (Html Msg)
+viewFooter : Model -> Html Msg
 viewFooter model =
     let
         maybeFooterRoute =
@@ -73,12 +64,18 @@ viewFooter model =
                 Home footerRoute ->
                     Just footerRoute
 
+                Watch footerRoute _ ->
+                    Just footerRoute
+
+                Host footerRoute ->
+                    Just footerRoute
+
                 _ -> Nothing
 
         footerContents =
             case maybeFooterRoute of
                 Just footerRoute ->
-                    viewFooterRoute footerRoute model
+                    [viewFooterRoute footerRoute model]
 
                 Nothing ->
                     []
@@ -86,51 +83,71 @@ viewFooter model =
     in
         case List.length footerContents of
             0 ->
-                [] -- If no footer want empty list
+                text ""
 
             _ ->
-                [ footer
+                footer
                     [ class "footer"
                     , css
-                        [ -- TODO: Styles for footer
+                        [ displayFlex
+                        , flexDirection column
                         ]
                     ]
-                    footerContents
-                ]
+                    [ Component.Footer.view model
+                    , div
+                        [ class "footer-contents"
+                        , css
+                            [ flexGrow (num 1)
+                            , flexBasis auto
+                            , Css.height zero
+                            ]
+                        ]
+                        footerContents
+                    ]
 
 
-viewFooterRoute : FooterRoute -> Model -> List (Html Msg)
+viewFooterRoute : FooterRoute -> Model -> Html Msg
 viewFooterRoute footerRoute model =
     case footerRoute of
         Closed ->
-            []
+            text ""
 
         About ->
-            []
+            Page.About.view model
 
         Donations ->
-            []
+            Page.Donations.view model
 
         Changelog ->
-            []
+            Page.Changelog.view model
 
 
-viewMain : Model -> List (Html Msg)
+viewMain : Model -> Html Msg
 viewMain model =
     let
         contents =
-            []
+            case model.route of
+                Watch _ _ ->
+                    Page.Video.view model
+
+                Host _ ->
+                    Page.Video.view model
+
+                Home _ ->
+                    Page.Home.view model
+
+                NotFound ->
+                    Page.NotFound.view model
+
     
     in
-        [ main_
+        main_
             [ css
                 [ displayFlex
                 , flexDirection column
-                , Css.height (vh 100)
-                , Css.width (vw 100)
+                , flexGrow (num 1)
                 , fontSize (Css.em 1)
                 , position relative
                 ]
             ]
             contents
-        ]

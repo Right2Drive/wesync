@@ -44,13 +44,6 @@ view model =
         , viewPanel watchPanel
             []
         ]
-    , div
-        [ class "filler"
-        , css
-            [ Css.height footerHeight
-            ]
-        ]
-        []
     ]
 
 footerHeight : Px
