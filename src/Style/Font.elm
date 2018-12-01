@@ -1,4 +1,4 @@
-module Style.Font exposing (..)
+module Style.Font exposing (josefin, satisfy)
 
 
 josefin : List String

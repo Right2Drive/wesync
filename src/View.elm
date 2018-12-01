@@ -1,22 +1,22 @@
 module View exposing (view)
 
 import Browser
+import Component.Footer
 import Css exposing (..)
 import Html
 import Html.Styled exposing (..)
 import Html.Styled.Attributes exposing (..)
 import Message exposing (Msg(..))
 import Model exposing (Model)
-import Nav exposing (Route(..), FooterRoute(..))
-import Url exposing (Url)
+import Nav exposing (FooterRoute(..), Route(..))
 import Page.About
-import Page.Donations
 import Page.Changelog
+import Page.Donations
 import Page.Home
+import Page.NoHost
 import Page.NotFound
 import Page.Video
-import Page.NoHost
-import Component.Footer
+import Url exposing (Url)
 
 
 view : Model -> Browser.Document Msg
@@ -28,6 +28,7 @@ view model =
             |> List.singleton
             |> List.map toUnstyled
     }
+
 
 viewRoute : Model -> Html Msg
 viewRoute model =
@@ -41,19 +42,19 @@ viewRoute model =
         footerContents =
             viewFooter model
     in
-        div
-            [ class ("route " ++ routeClass)
-            , css
-                [ displayFlex
-                , flexDirection column
-                , Css.height (vh 100)
-                , Css.width (vw 100)
-                , overflow Css.hidden
-                ]
+    div
+        [ class ("route " ++ routeClass)
+        , css
+            [ displayFlex
+            , flexDirection column
+            , Css.height (vh 100)
+            , Css.width (vw 100)
+            , overflow Css.hidden
             ]
-            [ pageContents
-            , footerContents
-            ]
+        ]
+        [ pageContents
+        , footerContents
+        ]
 
 
 viewFooter : Model -> Html Msg
@@ -70,40 +71,40 @@ viewFooter model =
                 Host footerRoute ->
                     Just footerRoute
 
-                _ -> Nothing
+                _ ->
+                    Nothing
 
         footerContents =
             case maybeFooterRoute of
                 Just footerRoute ->
-                    [viewFooterRoute footerRoute model]
+                    [ viewFooterRoute footerRoute model ]
 
                 Nothing ->
                     []
-
     in
-        case List.length footerContents of
-            0 ->
-                text ""
+    case List.length footerContents of
+        0 ->
+            text ""
 
-            _ ->
-                footer
-                    [ class "footer"
+        _ ->
+            footer
+                [ class "footer"
+                , css
+                    [ displayFlex
+                    , flexDirection column
+                    ]
+                ]
+                [ Component.Footer.view model
+                , div
+                    [ class "footer-contents"
                     , css
-                        [ displayFlex
-                        , flexDirection column
+                        [ flexGrow (num 1)
+                        , flexBasis auto
+                        , Css.height zero
                         ]
                     ]
-                    [ Component.Footer.view model
-                    , div
-                        [ class "footer-contents"
-                        , css
-                            [ flexGrow (num 1)
-                            , flexBasis auto
-                            , Css.height zero
-                            ]
-                        ]
-                        footerContents
-                    ]
+                    footerContents
+                ]
 
 
 viewFooterRoute : FooterRoute -> Model -> Html Msg
@@ -138,16 +139,14 @@ viewMain model =
 
                 NotFound ->
                     Page.NotFound.view model
-
-    
     in
-        main_
-            [ css
-                [ displayFlex
-                , flexDirection column
-                , flexGrow (num 1)
-                , fontSize (Css.em 1)
-                , position relative
-                ]
+    main_
+        [ css
+            [ displayFlex
+            , flexDirection column
+            , flexGrow (num 1)
+            , fontSize (Css.em 1)
+            , position relative
             ]
-            contents
+        ]
+        contents

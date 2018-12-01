@@ -1,20 +1,20 @@
 module Page.Home exposing (view)
 
+import Assets.Svg
+import Css exposing (..)
+import Css.Global
+import Css.Transitions exposing (Transition, easeInOut, transition)
 import Html
 import Html.Styled exposing (..)
 import Html.Styled.Attributes exposing (..)
 import Html.Styled.Events exposing (onClick)
-import Svg.Styled
-import Svg.Styled.Attributes
-import Css exposing (..)
-import Css.Global
-import Css.Transitions exposing (Transition, transition, easeInOut)
-import Style.Media as Media
 import Message exposing (Msg(..))
 import Model exposing (Model)
-import Style.Theme as Theme
 import Style.Font as Font
-import Assets.Svg
+import Style.Media as Media
+import Style.Theme as Theme
+import Svg.Styled
+import Svg.Styled.Attributes
 
 
 type alias Panel =
@@ -52,9 +52,11 @@ view model =
         ]
     ]
 
+
 footerHeight : Px
 footerHeight =
     px 40
+
 
 hostPanel : Panel
 hostPanel =
@@ -90,8 +92,8 @@ viewPanel : Panel -> List (Html Msg) -> Html Msg
 viewPanel panel contents =
     div
         [ classList
-            [ ("panel", True)
-            , (panel.class, True)
+            [ ( "panel", True )
+            , ( panel.class, True )
             ]
         , css
             [ displayFlex
@@ -108,6 +110,7 @@ viewPanel panel contents =
             , Media.desktop
                 [ hover
                     [ backgroundColor panel.activeColor
+
                     -- not supported by elm-css scoped, must use global
                     , Css.Global.children
                         [ Css.Global.class (titleClass panel.class)
@@ -146,9 +149,12 @@ viewPanel panel contents =
                 ]
             ]
             [ text panel.name ]
-        , panel.icon
-            [ Svg.Styled.Attributes.class
-                <| (iconClass panel.class) ++ " " ++ "svg-fill-transition"
+         , panel.icon
+            [ Svg.Styled.Attributes.class <|
+                iconClass panel.class
+                    ++ " "
+                    ++ "svg-fill-transition"
+
             -- Must make sure to use Svg.Styled instead of Html.Styled package
             , Svg.Styled.Attributes.css
                 [ Css.height (px <| toFloat panel.iconSize)
@@ -161,7 +167,9 @@ viewPanel panel contents =
                     ]
                 ]
             ]
-        ] ++ contents)
+         ]
+            ++ contents
+        )
 
 
 titleClass : String -> String
@@ -184,12 +192,15 @@ colorTransition =
     Css.Transitions.color3 transitionLength 0 easeInOut
 
 
+
 {--
     Length of the transitions for the home page.
 
     For the time being (until elm-css supports svg fill transitions), the value
     must also be changed in the 'index.html' template
 --}
+
+
 transitionLength : Float
 transitionLength =
     300

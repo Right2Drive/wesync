@@ -1,18 +1,18 @@
 module Component.Footer exposing (view)
 
-import Model exposing (Model)
+import Assets.Svg as Svg
 import Css exposing (..)
-import Css.Transitions exposing (transition, easeInOut)
-import Style.Media as Media
+import Css.Transitions exposing (easeInOut, transition)
 import Html.Styled exposing (..)
 import Html.Styled.Attributes exposing (..)
 import Html.Styled.Events exposing (..)
 import Message exposing (Msg(..))
-import Style.Theme as Theme
-import Style.Font as Font
-import Assets.Svg as Svg
-import Svg.Styled.Attributes as SvgAttributes
+import Model exposing (Model)
 import Nav exposing (FooterRoute(..))
+import Style.Font as Font
+import Style.Media as Media
+import Style.Theme as Theme
+import Svg.Styled.Attributes as SvgAttributes
 
 
 view : Model -> Html Msg
@@ -96,13 +96,12 @@ footerRouteItem footerRoute svg =
             footerRoute
                 |> ChangeFooterRoute
                 |> onClick
-        
+
         name =
             footerRoute
                 |> Nav.footerRouteToName
-
     in
-        rightFooterItem name svg prop
+    rightFooterItem name svg prop
 
 
 rightFooterItem : String -> Svg.Svg Msg -> Attribute Msg -> Html Msg
@@ -125,9 +124,9 @@ rightFooterItem name svg prop =
                 , hover
                     [ color Theme.dimWhite
                     ]
-                , transition
-                    <| List.singleton
-                    <| Css.Transitions.color3 150 0 easeInOut
+                , transition <|
+                    List.singleton <|
+                        Css.Transitions.color3 150 0 easeInOut
                 , Media.mobile
                     [ display none ]
                 ]

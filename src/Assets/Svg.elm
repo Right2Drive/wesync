@@ -1,5 +1,4 @@
-module Assets.Svg exposing (..)
-
+module Assets.Svg exposing (Svg, gift, github, host, info, send, watch)
 
 import Html
 import Html.Styled exposing (Html, fromUnstyled)
@@ -8,7 +7,7 @@ import Svg.Styled.Attributes exposing (..)
 
 
 type alias Svg msg =
-   List (Attribute msg) -> Html msg
+    List (Attribute msg) -> Html msg
 
 
 host : List (Attribute msg) -> Html msg
@@ -19,7 +18,7 @@ host attributes =
 
 
 watch : List (Attribute msg) -> Html msg
-watch attributes = 
+watch attributes =
     svg
         (attributes ++ [ width "24", height "24", viewBox "0 0 24 24" ])
         [ Svg.Styled.path [ d "M0 0h24v24H0z", fill "none" ] [], Svg.Styled.path [ d "M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z" ] [] ]
@@ -37,7 +36,6 @@ info attributes =
     svg
         (List.append attributes [ width "24", height "24", viewBox "0 0 24 24" ])
         [ Svg.Styled.path [ fill "none", d "M0 0h24v24H0V0z" ] [], Svg.Styled.path [ d "M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" ] [] ]
-
 
 
 gift : List (Attribute msg) -> Html msg

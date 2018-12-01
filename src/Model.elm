@@ -1,9 +1,9 @@
 module Model exposing (Cache, Flags, Model, defaultCache, defaultModel, update)
 
-import Nav exposing (Route(..))
 import Browser
 import Browser.Navigation as Nav
 import Message exposing (Msg(..))
+import Nav exposing (Route(..))
 import Url
 
 
@@ -17,7 +17,7 @@ type alias Model =
     , route : Route
     , cache : Cache
     , uuid : String
-    
+
     -- Peer
     , hostUuid : String
 
@@ -25,7 +25,9 @@ type alias Model =
     }
 
 
+
 -- TODO: How to handle the default link including /watch/<uuid>/
+
 
 defaultModel : Url.Url -> Nav.Key -> Cache -> Model
 defaultModel url key cache =
@@ -53,6 +55,7 @@ defaultCache =
     }
 
 
+
 -- Update
 
 
@@ -61,17 +64,16 @@ resolveRouteFromUrl url =
     let
         route =
             Nav.urlToRoute url
-
     in
-        case route of
-            Watch footerRoute "" ->
-                route
+    case route of
+        Watch footerRoute "" ->
+            route
 
-            Watch footerRoute uuid ->
-                Watch footerRoute ""
+        Watch footerRoute uuid ->
+            Watch footerRoute ""
 
-            _ ->
-                route
+        _ ->
+            route
 
 
 resolveHostUuidFromUrl : Url.Url -> String -> String
@@ -79,17 +81,16 @@ resolveHostUuidFromUrl url oldHostUuid =
     let
         route =
             Nav.urlToRoute url
-
     in
-        case route of
-            Watch footerRoute "" ->
-                oldHostUuid
+    case route of
+        Watch footerRoute "" ->
+            oldHostUuid
 
-            Watch footerRoute uuid ->
-                uuid
+        Watch footerRoute uuid ->
+            uuid
 
-            _ ->
-                oldHostUuid
+        _ ->
+            oldHostUuid
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -104,10 +105,10 @@ update msg model =
                     ( model, Nav.load href )
 
         UrlChanged url ->
-            (   { model
+            ( { model
                 | route = resolveRouteFromUrl url
                 , hostUuid = resolveHostUuidFromUrl url model.hostUuid
-                }
+              }
             , Cmd.none
             )
 

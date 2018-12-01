@@ -1,8 +1,8 @@
 module Message exposing (Msg(..))
 
 import Browser
-import Url
 import Nav exposing (FooterRoute)
+import Url
 
 
 type Msg

@@ -1,8 +1,6 @@
-module Style.Theme exposing (..)
-
+module Style.Theme exposing (blue, dark, darker, dimBlack, dimWhite, dimmerWhite, pink, white)
 
 import Css exposing (..)
-
 
 
 darker : Color
@@ -29,6 +27,7 @@ white : Color
 white =
     rgb 255 255 255
 
+
 dimWhite : Color
 dimWhite =
     rgba 255 255 255 0.85
@@ -39,7 +38,10 @@ dimmerWhite =
     rgba 255 255 255 0.65
 
 
+
 -- TODO: Update this based on wireframe
+
+
 dimBlack : Color
 dimBlack =
     rgba 0 0 0 0.85
