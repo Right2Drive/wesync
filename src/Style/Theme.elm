@@ -34,6 +34,11 @@ dimWhite =
     rgba 255 255 255 0.85
 
 
+dimmerWhite : Color
+dimmerWhite =
+    rgba 255 255 255 0.65
+
+
 -- TODO: Update this based on wireframe
 dimBlack : Color
 dimBlack =
