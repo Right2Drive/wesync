@@ -1,10 +1,15 @@
-module Assets.Svg exposing (host, watch)
+module Assets.Svg exposing (..)
 
 
 import Html
 import Html.Styled exposing (Html, fromUnstyled)
 import Svg.Styled exposing (..)
 import Svg.Styled.Attributes exposing (..)
+
+
+type alias Svg msg =
+   List (Attribute msg) -> Html msg
+
 
 host : List (Attribute msg) -> Html msg
 host attributes =
@@ -18,3 +23,32 @@ watch attributes =
     svg
         (attributes ++ [ width "24", height "24", viewBox "0 0 24 24" ])
         [ Svg.Styled.path [ d "M0 0h24v24H0z", fill "none" ] [], Svg.Styled.path [ d "M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z" ] [] ]
+
+
+github : List (Attribute msg) -> Html msg
+github attributes =
+    svg
+        (List.append attributes [ width "24", height "25", viewBox "0 0 24 25" ])
+        [ Svg.Styled.path [ d "M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" ] [] ]
+
+
+info : List (Attribute msg) -> Html msg
+info attributes =
+    svg
+        (List.append attributes [ width "24", height "24", viewBox "0 0 24 24" ])
+        [ Svg.Styled.path [ fill "none", d "M0 0h24v24H0V0z" ] [], Svg.Styled.path [ d "M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" ] [] ]
+
+
+
+gift : List (Attribute msg) -> Html msg
+gift attributes =
+    svg
+        (List.append attributes [ width "24", height "24", viewBox "0 0 24 24" ])
+        [ Svg.Styled.path [ fill "none", d "M0 0h24v24H0V0z" ] [], Svg.Styled.path [ d "M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3-1.05 0-1.96.54-2.5 1.35l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 12 7.4l3.38 4.6L17 10.83 14.92 8H20v6z" ] [] ]
+
+
+send : List (Attribute msg) -> Html msg
+send attributes =
+    svg
+        (List.append attributes [ width "24", height "24", viewBox "0 0 24 24" ])
+        [ Svg.Styled.path [ d "M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" ] [], Svg.Styled.path [ d "M0 0h24v24H0z", fill "none" ] [] ]

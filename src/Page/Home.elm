@@ -9,6 +9,7 @@ import Svg.Styled.Attributes
 import Css exposing (..)
 import Css.Global
 import Css.Transitions exposing (Transition, transition, easeInOut)
+import Style.Media as Media
 import Message exposing (Msg(..))
 import Model exposing (Model)
 import Style.Theme as Theme
@@ -25,6 +26,8 @@ type alias Panel =
     , activeColor : Color
     , inactiveItemColor : Color
     , activeItemColor : Color
+    , phoneColor : Color
+    , phoneItemColor : Color
     }
 
 
@@ -37,6 +40,9 @@ view model =
             , flexDirection row
             , Css.height (px 0)
             , flexGrow (int 1)
+            , Media.mobile
+                [ flexDirection column
+                ]
             ]
         ]
         [ viewPanel hostPanel
@@ -60,6 +66,8 @@ hostPanel =
     , activeColor = Theme.pink
     , inactiveItemColor = Theme.dimWhite
     , activeItemColor = Theme.dimBlack
+    , phoneColor = Theme.pink
+    , phoneItemColor = Theme.dimBlack
     }
 
 
@@ -73,6 +81,8 @@ watchPanel =
     , activeColor = Theme.pink
     , inactiveItemColor = Theme.dimWhite
     , activeItemColor = Theme.dimBlack
+    , phoneColor = Theme.dark
+    , phoneItemColor = Theme.dimWhite
     }
 
 
@@ -95,19 +105,24 @@ viewPanel panel contents =
             , transition
                 [ backgroundColorTransition
                 ]
-            , hover
-                [ backgroundColor panel.activeColor
-                -- not supported by elm-css scoped, must use global
-                , Css.Global.children
-                    [ Css.Global.class (titleClass panel.class)
-                        [ color <| panel.activeItemColor
-                        ]
-                    , Css.Global.svg
-                        [ Css.Global.withClass (iconClass panel.class)
-                            [ fill panel.activeItemColor
+            , Media.desktop
+                [ hover
+                    [ backgroundColor panel.activeColor
+                    -- not supported by elm-css scoped, must use global
+                    , Css.Global.children
+                        [ Css.Global.class (titleClass panel.class)
+                            [ color <| panel.activeItemColor
+                            ]
+                        , Css.Global.svg
+                            [ Css.Global.withClass (iconClass panel.class)
+                                [ fill panel.activeItemColor
+                                ]
                             ]
                         ]
                     ]
+                ]
+            , Media.mobile
+                [ backgroundColor panel.phoneColor
                 ]
             ]
         ]
@@ -123,6 +138,11 @@ viewPanel panel contents =
                 , transition
                     [ colorTransition
                     ]
+                , Media.mobile
+                    [ color panel.phoneItemColor
+                    , marginBottom (px 20)
+                    , fontSize (rem 3)
+                    ]
                 ]
             ]
             [ text panel.name ]
@@ -134,6 +154,11 @@ viewPanel panel contents =
                 [ Css.height (px <| toFloat panel.iconSize)
                 , Css.width (px <| toFloat panel.iconSize)
                 , fill panel.inactiveItemColor
+                , Media.mobile
+                    [ fill panel.phoneItemColor
+                    , Css.height (px <| toFloat <| panel.iconSize * 3 // 4)
+                    , Css.width (px <| toFloat <| panel.iconSize * 3 // 4)
+                    ]
                 ]
             ]
         ] ++ contents)
