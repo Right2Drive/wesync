@@ -1,4 +1,4 @@
-module Nav exposing (Route(..), FooterRoute(..), UrlRequest(..), urlToRoute, routeToClass, routeToTitle, footerRouteToString)
+module Nav exposing (Route(..), FooterRoute(..), UrlRequest(..), urlToRoute, routeToClass, routeToTitle, footerRouteToString, footerRouteToName)
 
 import Url exposing (Url)
 import Url.Parser as Parser exposing ((</>), Parser, oneOf, parse, s, string, top)

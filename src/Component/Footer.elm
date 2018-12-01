@@ -57,7 +57,7 @@ view model =
             [ class "right"
             , css
                 [ displayFlex
-                -- TODO: Switch direction of render
+                , overflow Css.hidden
                 ]
             ]
             [ footerRouteItem About
@@ -68,14 +68,25 @@ view model =
 
 footerRouteItem : FooterRoute -> Html Msg
 footerRouteItem footerRoute =
-    rightFooterItem (Nav.footerRouteToString footerRoute) (ChangeFooterRoute footerRoute) 
+    let
+        prop =
+            footerRoute
+                |> ChangeFooterRoute
+                |> onClick
+        
+        name =
+            footerRoute
+                |> Nav.footerRouteToName
+
+    in
+        rightFooterItem name prop
 
 
-rightFooterItem : String -> Msg -> Html Msg
-rightFooterItem name msg =
+rightFooterItem : String -> Attribute Msg -> Html Msg
+rightFooterItem name prop =
     span
         [ class "link"
-        , onClick msg
+        , prop
         , css
             [ textTransform uppercase
             , margin4 (px 0) (px 0) (px 0) (px 10)

@@ -110,3 +110,8 @@ update msg model =
                 }
             , Cmd.none
             )
+
+        ChangeFooterRoute footerRoute ->
+            ( model
+            , Cmd.none
+            )
