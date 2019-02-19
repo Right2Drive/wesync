@@ -1,3 +1,5 @@
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 const HtmlPlugin = require('html-webpack-plugin')
 const FaviconsPlugin = require('favicons-webpack-plugin')
 const merge = require('webpack-merge')
@@ -18,6 +20,31 @@ const baseConfig = {
     extensions: ['.elm', '.js']
   },
   plugins: [
+    new CleanWebpackPlugin(['dist'], {
+      root: root()
+    }),
+    new CopyPlugin([
+      {
+        from: root('assets', '_redirects'),
+        to: root('dist')
+      },
+      {
+        from: root('assets', 'browserconfig.xml'),
+        to: root('dist')
+      },
+      {
+        from: root('assets', 'robots.txt'),
+        to: root('dist')
+      },
+      {
+        from: root('assets', '.well-known'),
+        to: root('dist', '.well-known')
+      },
+      {
+        from: root('assets', 'icons'),
+        to: root('dist', 'icons')
+      }
+    ]),
     new HtmlPlugin({
       template: root('src', 'index.html'),
       inject: 'body'

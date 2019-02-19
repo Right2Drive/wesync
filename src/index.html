@@ -14,6 +14,15 @@
     <!-- Windows -->
     <meta name="msapplication-config" content="browserconfig.xml">
 
+    <!-- Remove margins on body -->
+    <style>body { margin: 0; }</style>
+
+    <!-- elm-css can't handle svg transitions -->
+    <style>.svg-fill-transition { transition: fill 300ms 0ms ease-in-out; }</style>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet">
   </head>
   <body>
     <noscript>

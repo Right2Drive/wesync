@@ -5,10 +5,14 @@ function devConfig () {
   return createConfig({
     mode: 'development',
     devServer: {
-      contentBase: root('dist'),
+      contentBase: [
+        root('dist'),
+        root('assets')
+      ],
       historyApiFallback: true,
       index: root('dist', 'index.html'),
-      overlay: true
+      overlay: true,
+      hot: false
     },
     module: {
       rules: [

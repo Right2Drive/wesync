@@ -1,6 +1,4 @@
-const CleanWebpackPlugin = require('clean-webpack-plugin')
 const SriPlugin = require('webpack-subresource-integrity')
-const CopyPlugin = require('copy-webpack-plugin')
 const ManifestPlugin = require('webpack-pwa-manifest')
 
 const createConfig = require('./base.config')
@@ -28,31 +26,10 @@ function prodConfig () {
       ]
     },
     plugins: [
-      new CleanWebpackPlugin(['dist'], {
-        root: root()
-      }),
       new SriPlugin({
         hashFuncNames: ['sha256', 'sha384'],
         enabled: process.env.NODE_ENV === 'production'
       }),
-      new CopyPlugin([
-        {
-          from: root('assets', '_redirects'),
-          to: root('dist')
-        },
-        {
-          from: root('assets', 'browserconfig.xml'),
-          to: root('dist')
-        },
-        {
-          from: root('assets', 'robots.txt'),
-          to: root('dist')
-        },
-        {
-          from: root('assets', '.well-known'),
-          to: root('dist', '.well-known')
-        }
-      ]),
       new ManifestPlugin({
         fingerprints: false,
         name: 'WeSync Video Client',
